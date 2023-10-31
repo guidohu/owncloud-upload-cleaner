@@ -73,7 +73,9 @@ type File struct {
 	FileInfo         fs.FileInfo
 	MD5Sum           string
 	FileName         string
+	FilePath         string
 	OriginalFileName string
+	OriginalFilePath string
 	Action           Action
 	Reason           Reason
 }
@@ -275,7 +277,9 @@ func evaluateFiles(ctx context.Context, files []fs.FileInfo, mode Action, outCha
 			FileInfo:         file,
 			MD5Sum:           md5,
 			FileName:         file.Name(),
+			FilePath:         fp,
 			OriginalFileName: file.Name(),
+			OriginalFilePath: fp,
 			Action:           NoAction,
 			Reason:           NoReason,
 		}
@@ -291,6 +295,7 @@ func evaluateFiles(ctx context.Context, files []fs.FileInfo, mode Action, outCha
 			f.Action = mode
 			f.Reason = DuplicateReason
 			f.OriginalFileName = orig.FileName
+			f.OriginalFilePath = orig.FilePath
 			duplicateFileCounter++
 		} else {
 			uniqueKeepFiles++
@@ -326,8 +331,8 @@ func processFiles(ctx context.Context, inChannel chan File, outChannel chan File
 }
 
 func processFile(f File) error {
-	dir := filepath.Dir(f.FileName)
-	filename := filepath.Base(f.FileName)
+	dir := filepath.Dir(f.FilePath)
+	filename := filepath.Base(f.FilePath)
 	var err error
 
 	switch f.Action {
@@ -343,14 +348,14 @@ func processFile(f File) error {
 		if dryRun {
 			break
 		}
-		err = os.Rename(f.FileName, destFile)
+		err = os.Rename(f.FilePath, destFile)
 	case DeleteAction:
 		processedFileCounter++
 		processedFileSizeCounter += int(f.FileInfo.Size())
 		if dryRun {
 			break
 		}
-		err = os.Remove(f.FileName)
+		err = os.Remove(f.FilePath)
 	case NoAction:
 		break
 	}

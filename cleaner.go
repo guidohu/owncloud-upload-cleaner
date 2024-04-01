@@ -171,7 +171,17 @@ func uiSetupContent(ctx context.Context) fyne.App {
 	var startButton *widget.Button
 	startButton = widget.NewButton("Start", func() {
 		startButton.Disable()
+		allMD5 = map[string]File{}
 		progress = 0
+		evaluatedFileCounter = 0
+		uniqueKeepFiles = 0
+		emptyFileCounter = 0
+		duplicateFileCounter = 0
+		processedFileCounter = 0
+		skippedDirectoryCounter = 0
+		skippedExtensionFilesCounter = 0
+		totalFileSizeCounter = 0
+		processedFileSizeCounter = 0
 		progressBinding.Reload()
 		files, err := scanFiles(baseDir)
 		if err != nil {

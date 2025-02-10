@@ -1,6 +1,6 @@
 # owncloud-upload-cleaner
 
-If you sync your photos and videos from your phone automatically to Owncloud you might end up with duplicates and zero byte files. This is a tool that helps you clean up upload folders of Owncloud.
+If you sync your photos and videos from your phone automatically to owncloud you might end up with duplicates and zero byte files ([see bug](https://github.com/owncloud/android/issues/3983)). This is a tool that helps you clean up upload folders of owncloud.
 
 This tool comes with a UI because that way it is more accessible to a broader audience. It also comes with a pre-built OSX version.
 
@@ -21,11 +21,13 @@ Usage of ./builds/owncloud-upload-cleaner:
 ## Building
 
 With the default golang tool chain run:
+
 ```
 go build -o owncloud-upload-cleaner
 ```
 
 In case you want to build an OSX application run:
+
 ```
 fyne package -os darwin -name owncloud-upload-cleaner
 ```

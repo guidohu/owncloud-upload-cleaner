@@ -221,7 +221,7 @@ func uiSetupContent(ctx context.Context) fyne.App {
 			}
 		}(processedChannel)
 	})
-	closeButton := widget.NewButton("Cancel", func() {
+	closeButton := widget.NewButton("Quit", func() {
 		ctx.Done()
 		a.Quit()
 	})

@@ -210,7 +210,7 @@ func uiSetupContent(ctx context.Context) fyne.App {
 					progress = float64(evaluatedFileCounter) / float64(len(files))
 					progressBinding.Reload()
 					// add description to status text
-					action := describeAction(f, dryRun)
+					action := describeAction(f)
 					fmt.Print(action)
 					idx := len(txtEntries)
 					txtEntriesList.SetItemHeight(idx, float32(strings.Count(action, "\n"))*30)
@@ -372,7 +372,7 @@ func processFile(f File) error {
 	return err
 }
 
-func describeAction(f File, dryRun bool) string {
+func describeAction(f File) string {
 	var s strings.Builder
 	s.WriteString(fmt.Sprintf("[%s] %s [%s]", f.Action.ToString(), f.FileName, bs.ByteSize(f.FileInfo.Size())))
 	if f.Action != NoAction {
@@ -479,7 +479,7 @@ func main() {
 					wg.Done()
 					return
 				}
-				action := describeAction(f, dryRun)
+				action := describeAction(f)
 				fmt.Print(action)
 			}
 		}
